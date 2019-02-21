@@ -6,6 +6,12 @@
     SUN,WINDY
 } from './.././.././constants/weathers';
 
+const location = "Bogota,col";
+const api_key = "2ee07664ed5af1f7d6d9fc8e5497895d";
+const url_base_weather = "https://api.openweathermap.org/data/2.5/weather";
+
+const api_weather =`${url_base_weather}?q=${location}&appid=${api_key}`
+
  const data={
      temperature: 45,
      weatherState: SUN,
@@ -31,6 +37,7 @@
     }
 
     handleUpdateClick = () => {
+        fetch(api_weather)
         this.setState({
             city: "UY JUEPUTA!",
             data:data2
