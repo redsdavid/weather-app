@@ -1,16 +1,12 @@
  import React, { Component } from 'react';
+ import transformWeather from './../../services/transformWeather';
+ import { api_weather } from './../../constants/api_url';
  import Location from './Location'
  import WeatherData from './WeatherData'
  import './styles.css';
  import {
-    SUN,WINDY
+    SUN
 } from './.././.././constants/weathers';
-
-const location = "Bogota,col";
-const api_key = "2ee07664ed5af1f7d6d9fc8e5497895d";
-const url_base_weather = "https://api.openweathermap.org/data/2.5/weather";
-
-const api_weather =`${url_base_weather}?q=${location}&appid=${api_key}`
 
  const data={
      temperature: 45,
@@ -19,37 +15,69 @@ const api_weather =`${url_base_weather}?q=${location}&appid=${api_key}`
      wind: '50 m/s'
  }
 
- const data2={
-    temperature: 45,
-    weatherState: WINDY,
-    humidity: 50,
-    wind: '10 m/s'
-}
-
  class WeatherLocation extends Component {
 
     constructor(){
         super();
         this.state={
-            city:"GONORREA!",
+            city:"TaBogo!",
             data: data
-        }
+        };
+        console.log("constructor");
     }
 
+    componentDidMount() {
+         //Shortcut cmd
+         console.log("componentDidMount");
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        //Shortcut cdup
+        console.log("componentDidUpdate");
+    }
+
+    
+    componentWillMount() {
+        console.log("UNSAFE componentWillMount");
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        console.log("UNSAFE componentWillUpdate");
+    }
+    
+    
+
+
+    
+    
+
     handleUpdateClick = () => {
-        fetch(api_weather)
-        this.setState({
-            city: "UY JUEPUTA!",
-            data:data2
-        })
+        
+        fetch(api_weather).then( resolve => {
+            return resolve.json();
+        }).then( data => {
+            
+            const newWeather = transformWeather(data);
+            console.log(newWeather)
+            debugger;
+            this.setState({
+                data: newWeather
+            });
+        });
+
+    
     }
      render(){
-         const {city , data } = this.state
+         const {city , data , jsonWeatherState } = this.state
+         console.log("render");
          return (
         <div className="weatherLocationCont">
              <Location city={city}></Location>
              <WeatherData data={data}></WeatherData>
              <button onClick={this.handleUpdateClick}>Actualizar! <span role="img" aria-label="doggie">🐶</span></button>
+        <div>
+             {jsonWeatherState}
+        </div>
         </div>
          )
      }
