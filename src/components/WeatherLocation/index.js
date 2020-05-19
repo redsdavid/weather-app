@@ -1,86 +1,61 @@
  import React, { Component } from 'react';
+ import CircularProgress from '@material-ui/core/CircularProgress';
+ import { PropTypes } from 'prop-types';
+ import getUrlWeatherByCity from './../../services/getUrlWeatherByCity'
  import transformWeather from './../../services/transformWeather';
- import { api_weather } from './../../constants/api_url';
  import Location from './Location'
  import WeatherData from './WeatherData'
  import './styles.css';
- import {
-    SUN
-} from './.././.././constants/weathers';
-
- const data={
-     temperature: 45,
-     weatherState: SUN,
-     humidity: 10,
-     wind: '50 m/s'
- }
 
  class WeatherLocation extends Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
+        const { city } = props;
         this.state={
-            city:"TaBogo!",
-            data: data
+            city,
+            data: null
         };
-        console.log("constructor");
     }
 
     componentDidMount() {
          //Shortcut cmd
-         console.log("componentDidMount");
+         this.handleUpdateClick();
     }
 
     componentDidUpdate(prevProps, prevState) {
         //Shortcut cdup
-        console.log("componentDidUpdate");
     }
 
     
-    componentWillMount() {
-        console.log("UNSAFE componentWillMount");
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        console.log("UNSAFE componentWillUpdate");
-    }
-    
-    
-
-
-    
-    
-
     handleUpdateClick = () => {
-        
+        const api_weather = getUrlWeatherByCity(this.state.city);
         fetch(api_weather).then( resolve => {
             return resolve.json();
         }).then( data => {
             
             const newWeather = transformWeather(data);
-            console.log(newWeather)
-            debugger;
             this.setState({
                 data: newWeather
             });
         });
+    }
 
     
-    }
      render(){
-         const {city , data , jsonWeatherState } = this.state
-         console.log("render");
+         const { onWeatherLocationClick } = this.props
+         const {city , data } = this.state
          return (
-        <div className="weatherLocationCont">
+        <div className="weatherLocationCont" onClick={onWeatherLocationClick}>
              <Location city={city}></Location>
-             <WeatherData data={data}></WeatherData>
-             <button onClick={this.handleUpdateClick}>Actualizar! <span role="img" aria-label="doggie">🐶</span></button>
-        <div>
-             {jsonWeatherState}
-        </div>
+             { data ?  <WeatherData data={data}></WeatherData> : <CircularProgress size={60}/>}
         </div>
          )
      }
  };
 
+ WeatherLocation.propTypes = {
+     city: PropTypes.string.isRequired,
+     onWeatherLocationClick: PropTypes.func,
+ }
  export default WeatherLocation;
