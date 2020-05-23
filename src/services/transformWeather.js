@@ -8,8 +8,8 @@ import {
     DRIZZLE
 } from './../constants/weathers';
 
-const getTemp = kelvin => {
-    return Number(convert(kelvin).from("K").to("C").toFixed(2)) ;
+ const getTemp = centigrades => {
+    return Number(convert(centigrades).from("C").to("C").toFixed(0));
 }
 
 const getWeatherState = weather => {
@@ -34,7 +34,7 @@ const transformWeather = weather_data => {
     const { humidity, temp }  = weather_data.main;
     const { speed } = weather_data.wind
     const weatherState = getWeatherState(weather_data.weather[0]);
-    const temperature = temp;
+    const temperature =  getTemp(temp);
 
     const data = {
         humidity,
