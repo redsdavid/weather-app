@@ -46,14 +46,14 @@
          const { onWeatherLocationClick } = this.props
          const {city , data } = this.state
          return (
-        <div className="weatherLocationCont" onClick={onWeatherLocationClick}>
+        <div className="weatherLocationCont" onClick={onWeatherLocationClick} style={{
+            backgroundImage: `url("https://images.unsplash.com/photo-1533450718592-29d45635f0a9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80")`}}>
              <Location city={city}></Location>
              { data ?  <WeatherData data={data}></WeatherData> : <CircularProgress size={60}/>}
         </div>
          )
      }
  };
-
  WeatherLocation.propTypes = {
      city: PropTypes.string.isRequired,
      onWeatherLocationClick: PropTypes.func,

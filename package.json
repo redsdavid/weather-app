@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.14",
+    "@material-ui/icons": "^4.9.1",
     "convert-units": "^2.3.4",
     "git": "^0.1.5",
+    "moment": "^2.26.0",
     "prop-types": "^15.6.2",
     "react": "next",
     "react-dom": "next",

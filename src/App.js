@@ -46,7 +46,7 @@ class App extends Component {
             onSelectedLocation={this.handleSelectedLocation}></LocationList>
           </Col>
 
-          <Col xs={12} md={6}>
+          <Col xs={12} md={6} className="extended-weather-cont">
             <Paper>
               <div className="details">
                 { city &&
@@ -57,6 +57,7 @@ class App extends Component {
           </Col>
         </Row>
       </Grid>
+      
     );
   }
 }
