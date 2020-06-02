@@ -5,6 +5,7 @@
  import transformWeather from './../../services/transformWeather';
  import Location from './Location'
  import WeatherData from './WeatherData'
+ import getUrlPhotoByCity from './../../services/getUrlPhotoByCity';
  import './styles.css';
 
  class WeatherLocation extends Component {
@@ -12,19 +13,34 @@
     constructor(props){
         super(props);
         const { city } = props;
+        this.image = null;
         this.state={
             city,
-            data: null
+            data: null,
+            image: this.getPhotoByCity(city)
         };
     }
 
     componentDidMount() {
-         //Shortcut cmd
+         //Shortcut cdm
          this.handleUpdateClick();
+         // this.image = getPhotoByCity(this.state.city);
     }
 
     componentDidUpdate(prevProps, prevState) {
         //Shortcut cdup
+    }
+
+    getPhotoByCity = (city) =>{
+        const photoUrl = getUrlPhotoByCity(city);
+        fetch(photoUrl).then(response =>{
+            return response.json();
+          }).then(jsonResponse =>{
+              const selectedImage = jsonResponse.results[Math.floor(Math.random() * jsonResponse.results.length)].urls.small;
+                this.setState({
+                    image: selectedImage
+                }) 
+          });
     }
 
     
@@ -44,12 +60,12 @@
     
      render(){
          const { onWeatherLocationClick } = this.props
-         const {city , data } = this.state
+         const {city , data, image } = this.state
          return (
         <div className="weatherLocationCont" onClick={onWeatherLocationClick} style={{
-            backgroundImage: `url("https://images.unsplash.com/photo-1533450718592-29d45635f0a9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80")`}}>
+            backgroundImage: `url(${image})`}}>
              <Location city={city}></Location>
-             { data ?  <WeatherData data={data}></WeatherData> : <CircularProgress size={60}/>}
+             { data && image ?  <WeatherData data={data}></WeatherData> : <CircularProgress size={60}/>}
         </div>
          )
      }

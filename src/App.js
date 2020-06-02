@@ -13,13 +13,15 @@ const cities = [
   'Bogota,col',
   'Lyon,fra',
   'Moscow,RU',
-  'San Andres,col'
+  'Cartagena,col'
 ]
 class App extends Component {
 
   constructor(){
     super();
-    this.state = { city: null};
+    this.state = { 
+      city: null
+    };
   }
 
   handleSelectedLocation = city => {
@@ -57,7 +59,6 @@ class App extends Component {
           </Col>
         </Row>
       </Grid>
-      
     );
   }
 }
