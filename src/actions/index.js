@@ -1,17 +1,24 @@
-// React : ACTION CREATOR
+import transformForecast from './../services/transformForecast';
 
-export const SET_CITY ='SET_CITY'
-export const setCity = payload => ({type: SET_CITY, payload});
+// React : ACTION CREATOR
+export const SET_CITY ='SET_CITY';
+export const SET_FORECAST_DATA = 'SET_FORECAST_DATA';
+
+const setCity = payload => ({type: SET_CITY, payload});
+const setForecastData = payload => ({type: SET_FORECAST_DATA, payload});
 
 export const api_key = "2ee07664ed5af1f7d6d9fc8e5497895d";
 export const url = "https://api.openweathermap.org/data/2.5/forecast";
-export const fetchForecast = payload => {
+
+export const setSelectedCity = payload => {
     
     return dispatch => {
-        const url_forecast = `${url}?q=${city}&appid=${api_key}`
+        const url_forecast = `${url}?q=${payload}&appid=${api_key}`
         
         // Activar en el estado un indicador de busqueda de datos.
-        fetch(url_forecast).then(
+        dispatch(setCity(payload));
+
+        return fetch(url_forecast).then(
             data => (data.json())
         ).then(
             weather_data => {
@@ -19,6 +26,7 @@ export const fetchForecast = payload => {
                 console.log(forecastData);
 
                 // Modificar el estado con el resultado de la promise
+                dispatch(setForecastData({city: payload, forecastData}));
             }
         )
     }
