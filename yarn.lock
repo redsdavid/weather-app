@@ -8360,9 +8360,9 @@ react-weathericons@^1.0.4:
     react-addons-test-utils "^15.4.1"
 
 react@next:
-  version "0.0.0-33c3af284"
-  resolved "https://registry.yarnpkg.com/react/-/react-0.0.0-33c3af284.tgz#bf79dade651f719634af073b4f9c7d9a999ffe3c"
-  integrity sha512-HYGqVlL5eQRta3MkAllgkbtAQYRPM6xcE1LrpKWb1atlyUJRkrSmJPW9Y65oM7Cm/hYbxwpgGermMYZDJFS+GQ==
+  version "17.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-17.0.0-rc.1.tgz#2f7575465517153dcd0d6a596f75f200c1612e2a"
+  integrity sha512-sQ7X+k3zwf6cFQu9pD6FFJMwHwoKAV+EKLWRW4rD1ruyRiFkmC09cjtqFySLtaZbUdzYEc8iy4uOwisJNlXytg==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
